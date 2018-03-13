@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>coreta</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/object.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body>
+    <section class="steps" data-step="1">
+        <div class="step step-1">
+            <h1>Init Sizes</h1>
+            <div class="form">
+                <label for="">
+                    <span>Objects Nbr :</span>
+                    <input type="number" min="2" data-size="object" class="input-size">
+                </label>
+            </div>
+            <div class="form">
+                <label for="">
+                    <span>Periods Nbr :</span>
+                    <input type="number" min="2" data-size="period" class="input-size">
+                </label>
+            </div>
+            <div class="form">
+                <label for="">
+                    <span>Criteria Nbr</span>
+                    <input type="number" min="2" data-size="criteria" class="input-size">
+                </label>
+            </div>
+            <div class="navigation-panel">
+                <button class="navigation" data-direction="to-left" value = "2" id="btn-step-1" disabled>next</button>
+            </div>
+        </div>
+        <div class="step step-2">
+            <h1>Set Attributes</h1>
+            <div class="table-form">
+                <h3>Liste Of Objects :</h3>
+                <div class="table">
+                    <div class="line" id="object-header-table"></div>
+                </div>
+                <div class="form">
+                    <label for="">
+                        <span>add an Object :</span>
+                        <input type="text" placeholder="object name" id="input-object-name">
+                    </label>
+                    <button class="add-info" value="object">add</button>
+                </div>
+            </div>
+            <div class="table-form">
+                <h3>Liste Of Criteria :</h3>
+                <div class="table">
+                    <div class="line" id="criteria-header-table"></div>
+                </div>
+                <div class="form">
+                    <label for="">
+                        <span>add a Criteria :</span>
+                        <input type="text" placeholder="criteria" id="input-criteria-name">
+                    </label>
+                    <label for="">
+                        <span>add a Weight :</span>
+                        <input type="number" id="input-criteria-weight">
+                    </label>
+                    <label for="">
+                        <select id="input-criteria-method">
+                            <option value="">set a Method :</option>
+                            <option value="1">gain</option>
+                            <option value="-1">cost</option>
+                            <option value="0">nominal</option>
+                        </select>
+                    </label>
+                    <button class="add-info" value="criteria">add</button>
+                </div>
+            </div>
+            <div class="table-form">
+                <h3>Liste Of Periods :</h3>
+                <div class="table">
+                    <div class="line" id="period-header-table"></div>
+                </div>
+                <div class="form">
+                    <label for="">
+                        <span>add a Period :</span>
+                        <input type="text" placeholder="period" id="input-period-name">
+                    </label>
+                    <label for="">
+                        <span>add a Weight :</span>
+                        <input type="number" id="input-period-weight">
+                    </label>
+                   
+                    <button class="add-info" value="period">add</button>
+                </div>
+            </div>
+            <div class="navigation-panel">
+                <button class="navigation" data-direction="to-right" value="1" id="btn-step-2-p" >prev</button>
+                <button class="navigation" data-direction="to-left" value="3" disabled id="btn-step-2-n">next</button>
+            </div>
+        </div>
+        <div class="step step-3">
+            <h1>Entry Data</h1>
+            <div class="table-form">
+                    <h3>DATA : <span id="period-name"></span> </h3>
+                    <div class="table">
+                        <div class="line" id="entry-header-table">
+                            <span class="row"></span>
+                        </div>
+                        <div class="lines" id="lines"></div>
+                        <div class="line" id="entry-input-table">
+                            <span class="row" id="object-name">test</span>
+                        </div>
+                    </div>                        
+                        <button id="add-line">add</button>
+                        <button id="add-period" disabled>new period</button>
+                </div>
+            <div class="navigation-panel">
+                <button class="navigation" data-direction="to-right" value="2">prev</button>
+                <button class="navigation" data-direction="to-left" value="4">next</button>
+            </div>
+        </div>
+        <div class="step step-4">
+            <h1>Calcul</h1>
+            <div class="navigation-panel">
+                <button class="navigation" data-direction="to-right" value="3">prev</button>
+                <button class="navigation" data-direction="to-left" value="1">next</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
