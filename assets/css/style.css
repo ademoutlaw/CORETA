@@ -102,8 +102,9 @@ input[type="number"] {
     max-width: 100%;
     width: 100%;
     min-height: 64px;
-    /* background:  red; */
+    max-height: 442px;
     overflow-x: scroll;
+    overflow-y: auto;
     /* display:  table; */
 }
 
@@ -124,17 +125,32 @@ input[type="number"] {
     background: #d4d4d4;
     border: solid;
     border-width: 0 1px 1px 0;
-    /* height: 17px; */
-    /* display: table-cell; */
+    overflow:hidden;  
+    white-space:nowrap; 
+    text-overflow: ellipsis;
 }
-
+.small .row{
+    width: 48px !important;
+}
 .row span {
     display: block;
     font-size: 14px;
     line-height: 14px;
-    /* background: red; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-
 h3 {
     margin: 5px;
+}
+input.row {
+    background-color: #ffffff;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+.step-3 .row {
+    height: 26px;
 }

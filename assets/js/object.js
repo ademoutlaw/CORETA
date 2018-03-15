@@ -111,7 +111,7 @@ class DataEntry {
         }
         this.periods.info.push({
             name:period.name,
-            weight:period.weight
+            weight:parseInt(period.weight)
         })
         return true;
     }
@@ -140,8 +140,8 @@ class DataEntry {
         }
         this.criterias.info.push({
             name:criteria.name,
-            weight:criteria.weight,
-            method:criteria.method
+            weight:parseInt(criteria.weight),
+            method:parseInt(criteria.method)
         })
         return true;
     }
@@ -152,13 +152,10 @@ class DataEntry {
         return this.objectIndex<this.objects.info.length;
     }
     addCriterias(object, period, criterias){
-        console.log(object);
-        console.log(period);
         const oI = this.getObjectIndex(object);
         const pI = this.getPeriodIndex(period);
         if(this.criterias.data.length===0){
             this._initCriteria();
-            console.log("init");
         }
         this.criterias.data[oI][pI]=criterias.slice();
     }
@@ -169,5 +166,21 @@ class DataEntry {
                 this.criterias.data[oI][pI]=[];//Array(this.criterias.size).fill(null);
             }
         }        
+    }
+    save(){
+        this.criterias.weightSum = this.criterias.info.reduce(function (infoA, infoB) {
+            return infoA+infoB.weight;
+        }, 0);
+        this.periods.weightSum = this.periods.info.reduce(function (infoA, infoB) {
+            return infoA+infoB.weight;
+        }, 0);
+        this.criterias.info.forEach(info => {
+            info.weightNorm = info.weight/this.criterias.weightSum;
+        });
+        this.periods.info.forEach(info => {
+            info.weightNorm = info.weight/this.periods.weightSum;
+        });
+        console.log(this);
+        console.log("save");
     }
 }

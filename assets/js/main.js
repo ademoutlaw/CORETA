@@ -132,9 +132,9 @@ window.addEventListener("load", function () {
             <span>${method}</span>
             `;
         // $span.addEventListener("click",getRemoveDataHeader($element));
+        $span.title = data.name;
         $element.appendChild($span);
     }
-
     
     //step 3----------------------------------------------
     const $periodName = document.getElementById('period-name');
@@ -144,29 +144,26 @@ window.addEventListener("load", function () {
     const $entryDataLines = document.getElementById('lines');
     const $btnAddLine = document.getElementById('add-line');
     const $btnAddPeriod = document.getElementById('add-period');
+    const $btnStep3N = document.getElementById('btn-step-3-n');
+    const $btnStep3P = document.getElementById('btn-step-3-p');
     let currentPeriod = null;
     let currentObject = null;
     $btnStep2N.addEventListener("click", function () {
-        // init
-        // get period name && set periode name in dom 
+
         dataEntry.resetPeriodIndex();
         dataEntry.resetObjectIndex();
         currentPeriod = dataEntry.getPeriod();
         setEntryDataInputs();
-        // get critrias names && creat spans with this names and append it to dom
+
         const criterias = dataEntry.getCriteriasNames();
         for (const criteria of criterias) {
             const $span = document.createElement("span");
             $span.className ="row";
             $span.innerText = criteria;
+            $span.title = criteria;
             $entryHeader.appendChild($span);
             $entryHeader.style.width = `${criteriaWidth+96}px`;
         }
-        
-        // set object name in dom && append creat inputs as same nbr of criteria size in dom
-        // dataEntry.resetObjectIndex();
-        // setEntryData();
-        // setEntryInputs();
     });
     function setEntryDataInputs() {
         if(dataEntry.hasObject()){
@@ -185,6 +182,7 @@ window.addEventListener("load", function () {
             }else{
                 $btnAddLine.disabled=true;
                 $btnAddPeriod.disabled = true;
+                $btnStep3N.disabled = false;
             }
         }
     }
@@ -193,6 +191,7 @@ window.addEventListener("load", function () {
             const criteriaNbr = dataEntry.getSizes().criteria;
             $entryInputs.innerHTML = "";
             $entryObjectName.innerText = currentObject.name;
+            $entryObjectName.title = currentObject.name;
             $entryInputs.appendChild($entryObjectName);
             for (let i = 0; i < criteriaNbr; i++) {
                 const $input = document.createElement("input");
@@ -205,7 +204,6 @@ window.addEventListener("load", function () {
     }
     function setEntryData() {
         const objectsCriterias = dataEntry.getObjectsCriteriasByPeriod(currentPeriod.name);
-        console.error(objectsCriterias);
         $entryDataLines.innerHTML = "";
         for (let i = 0; i < objectsCriterias.length; i++) {
             const criterias = objectsCriterias[i];
@@ -221,6 +219,7 @@ window.addEventListener("load", function () {
                 const $span = document.createElement("span");
                 $span.className = "row";
                 $span.innerText = criteria;
+                $span.title = criteria;
                 $line.appendChild($span);
                 $line.style.width = `${criteriaWidth+96}px`;
             }
@@ -228,6 +227,7 @@ window.addEventListener("load", function () {
         }
     }
     $btnAddLine.addEventListener("click",function () {
+        $btnStep3P.disabled = true;
         const criterias = getCriterias();
         if(criterias){
             dataEntry.addCriterias(currentObject.name, currentPeriod.name, criterias);
@@ -236,7 +236,7 @@ window.addEventListener("load", function () {
     });
     $btnAddPeriod.addEventListener("click", function() {
         setEntryDataInputs();
-    })
+    });
     function getCriterias(){
         const $inputs = $entryInputs.querySelectorAll("input");
         const critrias = [];
@@ -249,7 +249,11 @@ window.addEventListener("load", function () {
         }
         return critrias;
     }
-
+    
+    // step 4 -------------------------------------------------
+    $btnStep3N.addEventListener("click", function () {
+        dataEntry.save();
+    })
 })
 
 
