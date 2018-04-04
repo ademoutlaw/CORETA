@@ -7,130 +7,107 @@
 	<title>coreta</title>
 	<link rel="stylesheet" href="assets/css/style.css">
 	<script src="assets/js/object.1.js"></script>
-	<script src="assets/js/main.js"></script>
+	<script src="assets/js/main.1.js"></script>
 </head>
 <body>
-		<div class="storage">
-			<button value="new" id="storage-new" disabled>new</button>
-			<button value="save" id="storage-save" disabled>save</button>
-			<button value="restore" id="storage-restore" disabled>restore</button>
-		</div>
 	<section class="steps" data-step="1">
 		<div class="step step-1">
-			<h1>Init Sizes</h1>
-			<div class="form">
-				<label for="">
-					<span>Objects Nbr :</span>
-					<input type="number" min="2" data-size="object" class="input-size">
-				</label>
-			</div>
-			<div class="form">
-				<label for="">
-					<span>Periods Nbr :</span>
-					<input type="number" min="2" data-size="period" class="input-size">
-				</label>
-			</div>
-			<div class="form">
-				<label for="">
-					<span>Criteria Nbr</span>
-					<input type="number" min="2" data-size="criteria" class="input-size">
-				</label>
-			</div>
-			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-left" value = "2" id="btn-step-1" disabled>next</button>
-			</div>
-		</div>
-		<div class="step step-2">
-			<h1>Set Attributes</h1>
-			<div class="table-form">
-				<h3>Liste Of Objects :</h3>
-				<div class="table">
-					<div class="line" id="object-header-table"></div>
+			<h1>Data Names</h1>
+			<div class="table-form" id="add-object">
+				<h3>List Of Objects :</h3>
+				<div class="table row1">
+					<table>
+						<tbody>
+							<tr id="out-add-object"></tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="form">
-					<label for="">
+					<label>
 						<span>add an Object :</span>
-						<input type="text" placeholder="object name" id="input-object-name">
+						<input type="text" placeholder="object name" data-key="name" id="in-add-object">
 					</label>
-					<button class="add-info" value="object">add</button>
+					<button id="btn-add-object" value="object">add</button>
 				</div>
 			</div>
-			<div class="table-form">
-				<h3>Liste Of Criteria :</h3>
-				<div class="table">
-					<div class="line" id="criteria-header-table"></div>
+			<div class="table-form" id="add-criteria">
+				<h3>List Of Criteria :</h3>
+				<div class="table row3">
+					<table>
+						<tbody>
+								<tr id="out-add-criteria"></tr>
+							</tbody>
+					</table>
 				</div>
 				<div class="form">
-					<label for="">
+					<label>
 						<span>add a Criteria :</span>
-						<input type="text" placeholder="criteria" id="input-criteria-name">
+						<input type="text" placeholder="criteria" data-key="name" id="in-add-criteria-name">
 					</label>
-					<label for="">
+					<label>
 						<span>add a Weight :</span>
-						<input type="number" id="input-criteria-weight">
+						<input type="number" data-key="weight" id="in-add-criteria-weight">
 					</label>
-					<label for="">
-						<select id="input-criteria-method">
+					<label>
+						<select data-key="method" id="in-add-criteria-method">
 							<option value="">set a Method :</option>
 							<option value="1">gain</option>
 							<option value="-1">cost</option>
 							<option value="0">nominal</option>
 						</select>
 					</label>
-					<button class="add-info" value="criteria">add</button>
+					<button id="btn-add-criteria" value="criteria">add</button>
 				</div>
 			</div>
-			<div class="table-form">
-				<h3>Liste Of Periods :</h3>
-				<div class="table">
-					<div class="line" id="period-header-table"></div>
+			<div class="table-form" id="add-period">
+				<h3>List Of Periods :</h3>
+				<div class="table row2">
+					<table>
+						<tbody>
+							<tr id="out-add-period"></tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="form">
 					<label for="">
 						<span>add a Period :</span>
-						<input type="text" placeholder="period" id="input-period-name">
+						<input type="text" placeholder="period" data-key="name" id="in-add-period-name">
 					</label>
 					<label for="">
 						<span>add a Weight :</span>
-						<input type="number" id="input-period-weight">
+						<input type="number" data-key="weight" id="in-add-period-weight">
 					</label>
-				   
-					<button class="add-info" value="period">add</button>
+					
+					<button id="btn-add-period" value="period">add</button>
 				</div>
 			</div>
 			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="1" id="btn-step-2-p" >prev</button>
-				<button class="navigation" data-direction="to-left" value="3" disabled id="btn-step-2-n">next</button>
+				<button class="navigation" data-direction="to-left" value="2" disabled id="btn-step1-next">next</button>
+			</div>
+		</div>
+		<div class="step step-2">
+			<h1>Entry Data</h1>
+			<div class="table-form">
+				<h3>DATA : <span id="period-name"></span> </h3>
+				<div class="table">
+					<table style="min-width: 100%;">
+						<thead id="entry-head"></thead>
+						<tbody id="entry-body"></tbody>
+					</table>
+				</div>
+				<div class="form center">
+					<button id="btn-add-data">add</button>
+				</div>
+			</div>
+			<div class="navigation-panel">
+				<button class="navigation" data-direction="to-right" value="1">prev</button>
+				<button class="navigation" data-direction="to-left" value="3" id="btn-step2-next">next</button>
 			</div>
 		</div>
 		<div class="step step-3">
-			<h1>Entry Data</h1>
-			<div class="table-form">
-					<h3>DATA : <span id="period-name"></span> </h3>
-					<div class="table">
-						<div class="line" id="entry-header-table">
-							<span class="row"></span>
-						</div>
-						<div class="lines" id="lines"></div>
-						<div class="line" id="entry-input-table">
-							<span class="row" id="object-name">test</span>
-						</div>
-					</div>
-					<div class="form">
-						<button id="add-line">add</button>
-						<button id="add-period" disabled>new period</button>
-					</div>
-				</div>
-			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="2" id="btn-step-3-p">prev</button>
-				<button class="navigation" data-direction="to-left" value="4"  id="btn-step-3-n">next</button>
-			</div>
-		</div>
-		<div class="step step-4">
 			<h1>Data</h1>
-			
-			<div class="tables mode3d">
-				<div class="filter">
+			<div class="table-form">
+				<div class="form filter">
 					<span>Period : </span>
 					<select id="select-period"></select>
 					<span>Object : </span>
@@ -138,60 +115,97 @@
 					<span>Criteria : </span>
 					<select id="select-criteria"></select>
 				</div>
-				<div class="table table-mode mode3d">
-					<table id="table-view-mode3d">
-						<thead id="table-view-mode3d-head"></thead>
-						<tbody id="table-view-mode3d-body"></tbody>
+				<div class="table">
+					<table style="min-width: 100%;">
+						<thead id="data-head"></thead>
+						<tbody id="data-body"></tbody>
 					</table>
 				</div>
-				<div class="table table-mode mode2d">
-					<table id="table-view-mode2d">
-						<thead id="table-view-mode2d-head"></thead>
-						<tbody id="table-view-mode2d-body"></tbody>
-					</table>
-				</div>
-				<div class="table table-mode mode1d">
-					<div class="row" id="view-mode1d"></div>
-				</div>
-				
-				
-				<div class="pagination-panel">
+				<div class="form center">
 					<button class="pagination" id="prev-view-page">prev</button>
 					<button class="pagination" id="next-view-page">next</button>
 				</div>
 			</div>
 			<div class="navigation-panel">
 				<button class="navigation" data-direction="to-right" value="2">prev</button>
-				<button class="navigation" data-direction="to-left"  value="5" id="btn-step-4-n">next</button>
+				<button class="navigation" data-direction="to-left"  value="4" id="btn-step3-next">next</button>
 			</div>
 		</div>
-		<div class="step step-5">
+		<div class="step step-4">
 			<h1>Calcul</h1>
-			<div class="tables">
-				<div class="filter">
+			<div class="table-form">
+				<div class="form">
 					<span>Object 1 : </span>
-					<select id="select-object-1"></select>
-					<span>Object 2 : </span>
-					<select id="select-object-2"></select>
-				</div>
-				<div class="table">
-					<h3>by period:</h3>
-					<table id="indices-period">
-						<thead id="indices-period-head"></thead>
-						<tbody id="indices-period-body"></tbody>
-					</table>
+					<select id="select-by"></select>
 				</div>
 				<div class="table">
 					<h3>by criteria:</h3>
-					<table id="indices-criteria">
-						<thead id="indices-criteria-head"></thead>
-						<tbody id="indices-criteria-body"></tbody>
+					<table id="indices">
+						<thead id="indices-head"></thead>
+						<tbody id="indices-body"></tbody>
 					</table>
+				</div>
+				<div class="indice-menu">
+					<button id="indice-concordance-criteria">concordance</button>
+					<button id="indice-discordance-criteria">discordance</button>
+					<button id="indice-cridibility-criteria">cridibilité</button>
+					<button>surclassement</button>
+					<button></button>
+					<button></button>
 				</div>
 			</div>
 			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="4">prev</button>
-				<button class="save" data-direction="to-left"  disabled value="1">save</button>
+				<button class="navigation" data-direction="to-right" value="3">prev</button>
+				<button class="navigation" data-direction="to-left"  disabled value="4" id="btn-step4-next">next</button>
+			</div>			
+		</div>
+		<div class="storage"></div>
+	</section>
+	<section class="modals" data-modal="1" id="modal-container">
+		<div class="modal modal-1">
+			<h1>Start new Data</h1>
+			<div class="form">
+				<label for="">
+					<span>Objects Nbr :</span>
+					<input type="number" min="2" id="size-object">
+				</label>
+			</div>
+			<div class="form">
+				<label for="">
+					<span>Periods Nbr :</span>
+					<input type="number" min="2" id="size-period">
+				</label>
+			</div>
+			<div class="form">
+				<label for="">
+					<span>Criteria Nbr</span>
+					<input type="number" min="2" id="size-criteria">
+				</label>
+			</div>
+			<div class="navigation-panel">
+				<button class="cancel" id="cancel-new-coreta" disabled>cancel</button>
+				<button id="new-coreta">new</button>
+			</div>
+		</div>
+		<div class="modal modal-2">
+			<h1>You Have A Storage</h1>
+			<p>new: create a new Coreta</p>
+			<p>continue: continue with the old Coreta</p>
+			<div class="navigation-panel">
+				<button class="cancel" id="continue-coreta">continue</button>
+				<button class="get-new-coreta">new</button>
+			</div>
+		</div>
+		<div class="modal modal-3">
+			<h1>Set Storage</h1>
+			<p>new: create a new Coreta</p>
+			<p>restore: restore the old Coreta</p>
+			<p>save: save Coreta</p>
+			<div class="navigation-panel">
+				<button class="cancel" id="cancel-gear-storage">cancel</button>
+				<button id="restore-coreta" disabled>restore</button>
+				<button id="save-coreta">save</button>
+				<button class="get-new-coreta">new</button>
 			</div>
 		</div>
 	</section>

@@ -1,22 +1,27 @@
-class Coreta {
+class DataEntry {
 	constructor(){
 		this.reset();
 	}
-	setSize(period, object, criteria){
-		if(period<2||object<2||criteria<2) return false;
-		this.objects.size = object;
-		this.periods.size = period;
-		this.criterias.size = criteria;
-		this._initData();
-		return true;
+	setSize(attribute, value){
+		switch (attribute) {
+			case "object":
+				this.objects.size = value;
+				break;
+			case "period":
+				this.periods.size = value;
+				break;
+			case "criteria":
+				this.criterias.size = value;
+				break;
+		}
+		if(this.sizesIsSet()){
+			this._initData();
+		}
 	}
 	sizesIsSet(){
 		return this.periods.size >= 2 && this.objects.size >= 2 && this.criterias.size >= 2;
 	}
 	_initData(){
-		this.periods.size = parseInt(this.periods.size);
-		this.criterias.size = parseInt(this.criterias.size);
-		this.objects.size = parseInt(this.objects.size);
 		for (let pI = 0; pI < this.periods.size; pI++) {
 			this.data[pI]=[];
 			for (let oI = 0; oI < this.objects.size; oI++) {
@@ -91,9 +96,14 @@ class Coreta {
 		});
 	}
 	getObjectsNames(){
-		console.error("getObjectsNames");
+		// if(this.objects.size==0){
+		// 	const data1 = ["object 1", "object 2", "object 3"]
+		// 	data1.forEach(d=>{
+		// 		this.objects.data.push({name:d})
+		// 	})
+		// }
+		// this.objects.size = 3;
 		return this.objects.data.map(data=>{
-			console.log(data);
 			return data.name;
 		});
 	}
@@ -155,21 +165,64 @@ class Coreta {
 		if(attribute=="period") return true;
 		return value.method == -1 || value.method === 0 || value.method === "0" || value.method == 1
 	}
-	getObjectAttributes(){
-		return this.objects.data.slice();
-	}
-	getPeriodAttributes(){
-		return this.periods.data.slice();
-	}
-	getCriteriaAttributes(){
-		return this.criterias.data.slice();
-	}
 	setData(period, object, criterias){
 		const pI = this._getPeriodIndex(period);
 		const oI = this._getObjectIndex(object);
 		this.data[pI][oI]=criterias.slice();
 	}
 	getData(by={}){
+		// this.data = [
+		// 	[
+		// 		[111,112,113,114],
+		// 		[121,122,123,124],
+		// 		[131,132,133,134]
+		// 	],
+		// 	[
+		// 		[211,212,213,214],
+		// 		[221,222,223,224],
+		// 		[231,232,233,234]
+		// 	],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ],
+		// 	// [
+		// 	// 	[211,212,213,214],
+		// 	// 	[221,222,223,224],
+		// 	// 	[231,232,233,234]
+		// 	// ]
+		// ]
 		const period=by.period||"all",
 			object=by.object||"all",
 			criteria=by.criteria||"all";
@@ -196,6 +249,7 @@ class Coreta {
 			cI =this._getCriteriaIndex(criteria);
 		}
 		const tempData= [];
+		console.log(this.data);
 		for (let i = 0; i < pL; i++) {
 			tempData[i] = [];
 			for (let j = 0; j < oL; j++) {
@@ -212,6 +266,8 @@ class Coreta {
 				tempData[i] = tempData[i][0]
 			}
 		}
+		console.log(this.data);
+		console.log(tempData);
 		return pL==1?tempData[0]:tempData;
 	}
 	_getPeriodIndex(name){
@@ -233,7 +289,6 @@ class Coreta {
 		return -1;
 	}
 	normalize(){
-		console.warn("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 		this.criterias.weightSum = this.criterias.data.reduce(function (infoA, infoB) {
 			return infoA+infoB.weight;
 		}, 0);
@@ -249,11 +304,11 @@ class Coreta {
 		console.log(this);
 		console.log("save");
 	}
-	getSizes(objectFormat=true){
+	getSizes(){
 		const period = this.periods.size ;
 		const object = this.objects.size ;
 		const criteria= this.criterias.size ;
-		return objectFormat?{period, object, criteria}:[period, object, criteria];
+		return {period, object, criteria};
 	}
 	getIndices(obj1, obj2){
 		const oI1 = this._getObjectIndex(obj1);
@@ -314,66 +369,6 @@ class Coreta {
 		period.cridible = period.cocordance*period.discordance;
 		return {byPeriod, byCriteria, criteria, period};
 	}
-	
-	getIndicesByCriteria(type){
-		const indices = [];
-		for (let cIdx = 0; cIdx < this.criterias.size; cIdx++) {
-			indices[cIdx] = [];
-			for (let oIdx1 = 0; oIdx1 < this.objects.size; oIdx1++) {
-				indices[cIdx][oIdx1] = [];
-				for (let oIdx2 = 0; oIdx2 < this.objects.size; oIdx2++) {
-					if(oIdx1 === oIdx2){
-						indices[cIdx][oIdx1][oIdx2] = null;
-					}else{
-						indices[cIdx][oIdx1][oIdx2] = this._getIndiceByCriteria(type, cIdx, oIdx1, oIdx2);
-					}
-				}
-				
-			}
-			
-		}
-		return indices;
-	}
-	_getIndiceByCriteria(type, cIdx, oIdx1, oIdx2){
-		let indice;
-		switch (type) {
-			case "concordance":
-				indice = 0;
-				for (let i = 0; i < this.periods.size; i++) {
-					if(this._isPrefers(this.data[i][oIdx1][cIdx],this.data[i][oIdx2][cIdx],this.criterias.data[cIdx].method)){
-						indice += this.periods.data[i].weightNorm;						
-					}
-					
-				}
-				break;
-			case "discordance":
-				indice = 1;
-				for (let i = 0; i < this.periods.size; i++) {
-					if(this._isPrefers(this.data[i][oIdx1][cIdx],this.data[i][oIdx2][cIdx],this.criterias.data[cIdx].method)){
-						indice *= this.periods.data[i].weightNorm;
-					}
-					
-				}
-				break;
-			case "cridibility":
-				let indice1 = 0;
-				let indice2 = 1;
-				for (let i = 0; i < this.periods.size; i++) {
-					if(this._isPrefers(this.data[i][oIdx1][cIdx],this.data[i][oIdx2][cIdx],this.criterias.data[cIdx].method)){
-						indice2 *= this.periods.data[i].weightNorm;
-						indice1 += this.periods.data[i].weightNorm;
-					}
-					
-				}
-				indice = indice1*indice2;
-				break;
-		
-			default:
-			console.error("type uknown");
-				break;
-		}
-		return indice;
-	}
 	_isPrefers(val1, val2, method){
 		return method == 0 ? (val1 == val2) : (val1 * method > val2 * method);
 	}
@@ -410,21 +405,94 @@ class Coreta {
 		this.criteriaIndex = 0;
 		this.objectIndex = 0;
 	}
-	getFirstPeriodNotFull(){
-		for (let i = 0; i < this.periods.size; i++) {
-			for (let j = 0; j < this.objects.size; j++) {
-					if(this.data[i][j][0]==null){
-						return {
-							period:this.periods.data[i].name,
-							data:this.data[i].slice()
-						}
-					}
-			}
-		}
-		const i = this.periods.size-1;
-		return {
-			period:this.periods.data[i].name,
-			data:this.data[i].slice()
-		}
-	}
+	
+	// getCriteriasNames(){
+	//     return this.criterias.info.map(info=>info.name);
+	// }
+	// getObjectIndex(name){
+	//     for (let i = 0; i < this.objects.info.length; i++) {
+	//         const info = this.objects.info[i];
+	//         if(info.name==name)return i;
+	//     }
+	//     return -1;
+	// }
+	// getPeriodIndex(name){
+	//     for (let i = 0; i < this.periods.info.length; i++) {
+	//         const info = this.periods.info[i];
+	//         if(info.name==name)return i;
+	//     }
+	//     return -1;
+	// }
+	// getObjectsCriteriasByPeriod(period){
+	//     const pI = this.getPeriodIndex(period);
+	//     const criterias = [];
+	//     for (let oI = 0; oI < this.objects.info.length; oI++) {
+	//         if(!this.criterias.data[oI] || this.criterias.data[oI][pI].length==0){
+	//             break;
+	//         }
+	//         criterias.push(this.criterias.data[oI][pI].slice());
+	//     }
+	//     return criterias;
+	// }
+	// addPeriod(period){
+	//     if(this.isPeriodFull()){
+	//         console.error("periods is full");
+	//         return;
+	//     }
+	//     if(period.name.length<3) return false;
+	//     for (const info of this.periods.info) {
+	//         if(info.name==period.name) return false;
+	//     }
+	//     this.periods.info.push({
+	//         name:period.name,
+	//         weight:parseInt(period.weight)
+	//     })
+	//     return true;
+	// }
+	// addObject(object){
+	//     if(this.isObjectFull()){
+	//         console.error("objects is full");
+	//         return false;
+	//     }
+	//     if(object.name.length<3) return false;
+	//     for (const info of this.objects.info) {
+	//         if(info.name==object.name) return false;
+	//     }
+	//     this.objects.info.push({
+	//         name:object.name
+	//     })
+	//     return true;
+	// }
+	// addCriteria(criteria){
+	//     if(this.isCriteriaFull()){
+	//         console.error("criterias is full");
+	//         return;
+	//     }
+	//     if(criteria.name.length<3) return false;
+	//     for (const info of this.criterias.info) {
+	//         if(info.name==criteria.name) return false;
+	//     }
+	//     this.criterias.info.push({
+	//         name:criteria.name,
+	//         weight:parseInt(criteria.weight),
+	//         method:parseInt(criteria.method)
+	//     })
+	//     return true;
+	// }
+	// hasPeriod(){
+	//     return this.periodIndex<this.periods.info.length;
+	// }
+	// hasObject(){
+	//     return this.objectIndex<this.objects.info.length;
+	// }
+	// addCriterias(object, period, criterias){
+	//     const oI = this.getObjectIndex(object);
+	//     const pI = this.getPeriodIndex(period);
+	//     if(this.criterias.data.length===0){
+	//         this._initCriteria();
+	//     }
+	//     this.criterias.data[oI][pI]=criterias.slice();
+	// }
+	
+	
 }
