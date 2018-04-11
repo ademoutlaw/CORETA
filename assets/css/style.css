@@ -70,7 +70,17 @@ h3 {
 [data-modal="2"]>.modal-2,
 [data-modal="3"]>.modal-3,
 [data-modal="4"]>.modal-4, 
-[data-modal="5"]>.modal-5{
+[data-modal="5"]>.modal-5,
+[data-modal="6"]>.modal-6{
+	display: block;
+}
+.edit-weight, .edit-method{
+	display: none;
+}
+.set-weight .edit-weight{
+	display: block;
+}
+.set-method .edit-method{
 	display: block;
 }
 .navigation-panel {
@@ -110,21 +120,21 @@ input[type="number"] {
 	transition: all 0s .4s, z-index 0s;
 }
 
-.to-right>.step {
+.right>.step {
 	left: unset;
 	right: 100%;
 }
 
-.to-right .navigation-panel {
+.right .navigation-panel {
 	min-width: 573px;
 }
 
-.to-left>.step {
+.left>.step {
 	left: 100%;
 	right: unset;
 }
 
-.to-left .navigation-panel {
+.left .navigation-panel {
 	min-width: 104px;
 }
 
@@ -173,6 +183,9 @@ input[type="number"] {
 .no-form .form {
 	visibility: hidden;
 }
+.no-pagination .pagination{
+	display: none;
+}
 /************************************ table ****************************/
 .table {
 	overflow-x: scroll;
@@ -196,7 +209,8 @@ table {
 th, td {
 	background-color: #e1e1e1;
 	color: black;
-	width: 96px;
+	max-width: 120px;
+	min-width: 40px;
 	height: 25px;
 	text-align: center;
 	overflow: hidden;
@@ -218,4 +232,20 @@ th, td {
 ::-webkit-scrollbar-thumb {
   background-color: #8bc34a;
   outline: 1px solid slategrey;
+}
+.indice-menu button {
+    width: 184px;
+    margin: 4px 0 0 0px;
+    height: 27px;
+}
+.on-no-form span {
+    background-color: #e1e1e1;
+    color: black;
+    text-align: center;
+    width: 100px;
+	margin: 3px;
+	display: none;
+}
+.no-form .on-no-form span {
+	display: block;
 }

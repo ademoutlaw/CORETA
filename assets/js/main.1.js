@@ -417,7 +417,7 @@ window.addEventListener("load", function () {
 				}else{
 					setTableContent(horiz,null,true);
 					setTableContent(data);
-				}				
+				}
 			}else{
 				$tbody.appendChild(createElement("tr",[createElement("td",data)]));
 			}
@@ -579,18 +579,18 @@ window.addEventListener("load", function () {
 			setIndicesByCriteria("concordance")
 			console.log("hiiiiiiiiiiiiiiiiiii");
 		})
-		const $btnIndiceDiscordanceCriteria = document.getElementById('indice-discordance-criteria');
-		$btnIndiceDiscordanceCriteria.addEventListener("click", function () {
-			//fn.initIndicesDisplay();
-			setIndicesByCriteria("discordance")
-			console.log("hiiiiiiiiiiiiiiiiiii");
-		})
-		const $btnIndiCeCridibilityCriteria = document.getElementById('indice-cridibility-criteria');
-		$btnIndiCeCridibilityCriteria.addEventListener("click", function () {
-			//fn.initIndicesDisplay();
-			setIndicesByCriteria("cridibility")
-			console.log("hiiiiiiiiiiiiiiiiiii");
-		})
+		// const $btnIndiceDiscordanceCriteria = document.getElementById('indice-discordance-criteria');
+		// $btnIndiceDiscordanceCriteria.addEventListener("click", function () {
+		// 	//fn.initIndicesDisplay();
+		// 	setIndicesByCriteria("discordance")
+		// 	console.log("hiiiiiiiiiiiiiiiiiii");
+		// })
+		// const $btnIndiCeCridibilityCriteria = document.getElementById('indice-cridibility-criteria');
+		// $btnIndiCeCridibilityCriteria.addEventListener("click", function () {
+		// 	//fn.initIndicesDisplay();
+		// 	setIndicesByCriteria("cridibility")
+		// 	console.log("hiiiiiiiiiiiiiiiiiii");
+		// })
 	}
 	function initStorage() {
 		flag.hasStorage = false;

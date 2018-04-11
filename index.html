@@ -6,59 +6,14 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>coreta</title>
 	<link rel="stylesheet" href="assets/css/style.css">
-	<script src="assets/js/object.1.js"></script>
-	<script src="assets/js/main.1.js"></script>
+	<script src="assets/js/jquery-3.3.1.min.js"></script>
+	<script src="assets/js/object.2.js"></script>
+	<script src="assets/js/main.2.js"></script>
 </head>
 <body>
 	<section class="steps" data-step="1">
 		<div class="step step-1">
 			<h1>Data Names</h1>
-			<div class="table-form" id="add-object">
-				<h3>List Of Objects :</h3>
-				<div class="table row1">
-					<table>
-						<tbody>
-							<tr id="out-add-object"></tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="form">
-					<label>
-						<span>add an Object :</span>
-						<input type="text" placeholder="object name" data-key="name" id="in-add-object">
-					</label>
-					<button id="btn-add-object" value="object">add</button>
-				</div>
-			</div>
-			<div class="table-form" id="add-criteria">
-				<h3>List Of Criteria :</h3>
-				<div class="table row3">
-					<table>
-						<tbody>
-								<tr id="out-add-criteria"></tr>
-							</tbody>
-					</table>
-				</div>
-				<div class="form">
-					<label>
-						<span>add a Criteria :</span>
-						<input type="text" placeholder="criteria" data-key="name" id="in-add-criteria-name">
-					</label>
-					<label>
-						<span>add a Weight :</span>
-						<input type="number" data-key="weight" id="in-add-criteria-weight">
-					</label>
-					<label>
-						<select data-key="method" id="in-add-criteria-method">
-							<option value="">set a Method :</option>
-							<option value="1">gain</option>
-							<option value="-1">cost</option>
-							<option value="0">nominal</option>
-						</select>
-					</label>
-					<button id="btn-add-criteria" value="criteria">add</button>
-				</div>
-			</div>
 			<div class="table-form" id="add-period">
 				<h3>List Of Periods :</h3>
 				<div class="table row2">
@@ -71,21 +26,105 @@
 				<div class="form">
 					<label for="">
 						<span>add a Period :</span>
-						<input type="text" placeholder="period" data-key="name" id="in-add-period-name">
+						<input type="text" placeholder="period" id="in-add-period-name">
 					</label>
 					<label for="">
 						<span>add a Weight :</span>
-						<input type="number" data-key="weight" id="in-add-period-weight">
+						<input type="number" id="in-add-period-weight">
 					</label>
 					
 					<button id="btn-add-period" value="period">add</button>
 				</div>
 			</div>
+			<div class="table-form" id="add-action">
+				<h3>List Of actions :</h3>
+				<div class="table row1">
+					<table>
+						<tbody>
+							<tr id="out-add-action"></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="form">
+					<label>
+						<span>add an action :</span>
+						<input type="text" placeholder="action name" id="in-add-action">
+					</label>
+					<button id="btn-add-action" value="action">add</button>
+				</div>
+			</div>
+			<div class="table-form" id="add-criteria">
+				<h3>List Of Criteria :</h3>
+				<div class="table row3">
+					<table>
+						<tbody>
+							<tr id="out-add-criteria"></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="form">
+					<label>
+						<span>add a Criteria :</span>
+						<input type="text" placeholder="criteria" data-key="name" id="in-add-criteria-name">
+					</label>
+					<label>
+						<span>add a Weight :</span>
+						<input type="number" data-key="weight" id="in-add-criteria-weight">
+					</label>
+					<label>
+						<select id="in-add-criteria-method">
+							<option value="">set a Method :</option>
+							<option value="1">gain</option>
+							<option value="-1">cost</option>
+							<option value="0">nominal</option>
+						</select>
+					</label>
+					<button id="btn-add-criteria" value="criteria">add</button>
+				</div>
+			</div>
+			
 			<div class="navigation-panel">
 				<button class="navigation" data-direction="to-left" value="2" disabled id="btn-step1-next">next</button>
 			</div>
 		</div>
 		<div class="step step-2">
+			<h1>Lamda Values</h1>
+			<div class="table-form" id="add-lamda">
+				<h3>List Of Lamdas :</h3>
+				<div class="table row1">
+					<table>
+						<tbody>
+							<tr id="out-add-lamda"></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="form">
+					<label for="">
+						<span>add a Lamda :</span>
+						<input type="number" placeholder="lamda" id="in-add-lamda">
+					</label>
+					<button id="btn-add-lamda" value="period">add</button>
+				</div>
+			</div>
+			<div class="table-form" id="add-lamda-g">
+				<h3>Lamda global :</h3>
+				<div id="out-add-lamda-g" class="on-no-form"></tr>
+						
+				</div>
+				<div class="form">
+					<label>
+						<span>add an lamda :</span>
+						<input type="number" placeholder="lamda global" id="in-add-lamda-g">
+					</label>
+					<button id="btn-add-lamda-g" value="action">add</button>
+				</div>
+			</div>
+			<div class="navigation-panel">
+				<button id="btn-step2-prev">prev</button>
+				<button id="btn-step2-next">next</button>
+			</div>
+		</div>
+		<div class="step step-3">
 			<h1>Entry Data</h1>
 			<div class="table-form">
 				<h3>DATA : <span id="period-name"></span> </h3>
@@ -100,63 +139,64 @@
 				</div>
 			</div>
 			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="1">prev</button>
-				<button class="navigation" data-direction="to-left" value="3" id="btn-step2-next">next</button>
+				<button id="btn-step3-prev">prev</button>
+				<button id="btn-step3-next">next</button>
 			</div>
 		</div>
-		<div class="step step-3">
+		<div class="step step-4">
 			<h1>Data</h1>
 			<div class="table-form">
 				<div class="form filter">
 					<span>Period : </span>
 					<select id="select-period"></select>
-					<span>Object : </span>
-					<select id="select-object"></select>
+					<span>action : </span>
+					<select id="select-action"></select>
 					<span>Criteria : </span>
 					<select id="select-criteria"></select>
 				</div>
 				<div class="table">
-					<table style="min-width: 100%;">
+					<table style="min-width: 100%;" id="data-table">
 						<thead id="data-head"></thead>
 						<tbody id="data-body"></tbody>
 					</table>
 				</div>
-				<div class="form center">
+				<div class="form center" id="pagination">
 					<button class="pagination" id="prev-view-page">prev</button>
 					<button class="pagination" id="next-view-page">next</button>
 				</div>
 			</div>
 			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="2">prev</button>
-				<button class="navigation" data-direction="to-left"  value="4" id="btn-step3-next">next</button>
+				<button id="btn-step4-prev">prev</button>
+				<button id="btn-step4-next">next</button>
 			</div>
-		</div>
-		<div class="step step-4">
+		</div>		
+		<div class="step step-5">
 			<h1>Calcul</h1>
 			<div class="table-form">
+				<div class="indice-menu">
+					<button id="concordance">concordance</button>
+					<button id="discordance">non-discordance</button>
+					<button id="credibility">cridibilité</button>
+					<button id="surclassement">surclassement</button>
+					<button>concrodance global</button>
+					<button>non-discordance global</button>
+					<button>crédibilité global</button>
+					<button>surclassement global</button>
+				</div>
 				<div class="form">
 					<span>by : </span>
 					<select id="select-by"></select>
 				</div>
 				<div class="table">
-					<table id="indices">
+					<table id="indices" style="min-width: 100%;min-height: 370px;">
 						<thead id="indices-head"></thead>
 						<tbody id="indices-body"></tbody>
 					</table>
 				</div>
-				<div class="indice-menu">
-					<button id="indice-concordance-criteria">concordance</button>
-					<!-- <button id="indice-discordance-criteria">discordance</button>
-					<button id="indice-cridibility-criteria">cridibilité</button>
-					<button>surclassement</button>
-					<button></button>
-					<button></button> -->
-				</div>
 			</div>
 			<div class="navigation-panel">
-				<button class="navigation" data-direction="to-right" value="3">prev</button>
-				<button class="navigation" data-direction="to-left"  disabled value="4" id="btn-step4-next">next</button>
-			</div>			
+				<button id="btn-step5-prev">prev</button>
+			</div>
 		</div>
 		<div class="storage"></div>
 	</section>
@@ -165,8 +205,8 @@
 			<h1>Start new Data</h1>
 			<div class="form">
 				<label for="">
-					<span>Objects Nbr :</span>
-					<input type="number" min="2" id="size-object">
+					<span>actions Nbr :</span>
+					<input type="number" min="2" id="size-action">
 				</label>
 			</div>
 			<div class="form">
@@ -182,7 +222,7 @@
 				</label>
 			</div>
 			<div class="navigation-panel">
-				<button class="cancel" id="cancel-new-coreta" disabled>cancel</button>
+				<button id="back">cancel</button>
 				<button id="new-coreta">new</button>
 			</div>
 		</div>
@@ -191,8 +231,8 @@
 			<p>new: create a new Coreta</p>
 			<p>continue: continue with the old Coreta</p>
 			<div class="navigation-panel">
-				<button class="cancel" id="continue-coreta">continue</button>
-				<button class="get-new-coreta">new</button>
+				<button class="restore-coreta">restore</button>
+				<button class="get-new-coreta-modal">new</button>
 			</div>
 		</div>
 		<div class="modal modal-3">
@@ -202,9 +242,67 @@
 			<p>save: save Coreta</p>
 			<div class="navigation-panel">
 				<button class="cancel" id="cancel-gear-storage">cancel</button>
-				<button id="restore-coreta" disabled>restore</button>
+				<button class="restore-coreta" >restore</button>
 				<button id="save-coreta">save</button>
-				<button class="get-new-coreta">new</button>
+				<button class="get-new-coreta-modal">new</button>
+			</div>
+		</div>
+		<div class="modal modal-4" id="edit-attribute-modal">
+			<h1>Edit Attributes</h1>
+			<div class="form">
+				<label>
+					<span>Name :</span>
+					<input type="text" id="edit-in-name">
+				</label>
+			</div>
+			<div class="form edit-weight">
+				<label>
+					<span>Weight :</span>
+					<input type="number" min="2" id="edit-in-weight">
+				</label>
+			</div>
+			<div class="form edit-method">
+				<label>
+					<span>Method :</span>
+					<select id="edit-in-method">
+						<option value="">set a Method :</option>
+						<option value="1">gain</option>
+						<option value="-1">cost</option>
+						<option value="0">nominal</option>
+					</select>
+				</label>
+			</div>
+			<div class="navigation-panel">
+				<button class="cancel" id="cancel-edit-attribute">cancel</button>
+				<button id="ok-edit-attribute">edit</button>
+			</div>
+		</div>
+		<div class="modal modal-5">
+			<h1>Edit Data</h1>
+			<div class="form">
+				<label>
+					<span>data :</span>
+					<input type="text" id="edit-in-data">
+				</label>
+			</div>
+			
+			<div class="navigation-panel">
+				<button class="cancel" id="cancel-edit-data">cancel</button>
+				<button id="ok-edit-data">edit</button>
+			</div>
+		</div>
+		<div class="modal modal-6">
+			<h1>Edit Lamda</h1>
+			<div class="form">
+				<label>
+					<span>lamda :</span>
+					<input type="number" id="edit-in-lamda">
+				</label>
+			</div>
+			
+			<div class="navigation-panel">
+				<button class="cancel" id="cancel-edit-lamda">cancel</button>
+				<button id="ok-edit-lamda">edit</button>
 			</div>
 		</div>
 	</section>
