@@ -319,14 +319,15 @@ class Coreta{
 					}
 					let indice = 1;
 					if(cIndice<1){
-						cIndice = this.round(1-cIndice);
+						const cIndiceM = this.round(1-cIndice);
 						for (let i = 0; i < this.periods.size; i++) {
-							if(!this._isPrefers(this.data[i][aIdx1][index],this.data[i][aIdx2][index],this.criterias.data[index].method)){								
-								indice = this.round(indice* (this.round(1-this.periods.data[i].weightNorm)/cIndice));
+							if(this.periods.data[i].weightNorm>cIndice && 
+								!this._isPrefers(this.data[i][aIdx1][index],this.data[i][aIdx2][index],this.criterias.data[index].method)){								
+								indice = this.round(indice* (this.round(1-this.periods.data[i].weightNorm)/cIndiceM));
 							}
 						}
 					}
-					indices[aIdx1][aIdx2] = indice>1?1:indice;;
+					indices[aIdx1][aIdx2] = indice;;
 				}
 			}
 		}
@@ -351,12 +352,12 @@ class Coreta{
 					if(cIndice<1){
 						const cIndiceM = this.round(1-cIndice);
 						for (let i = 0; i < this.periods.size; i++) {
-							if(!this._isPrefers(this.data[i][aIdx1][index],this.data[i][aIdx2][index],this.criterias.data[index].method)){								
+							if(this.periods.data[i].weightNorm>cIndice && 
+								!this._isPrefers(this.data[i][aIdx1][index],this.data[i][aIdx2][index],this.criterias.data[index].method)){								
 								dIndice = this.round(dIndice* (this.round(1-this.periods.data[i].weightNorm)/cIndiceM));
 							}
 						}
 					}
-					dIndice = dIndice>1?1:dIndice;
 					indices[aIdx1][aIdx2] = cIndice * dIndice;
 				}
 			}
@@ -369,6 +370,82 @@ class Coreta{
 		return data.map(dt=>{
 			return dt.map(d=>d===null?d:d<lamda?"no":lamda);
 		});
+	}
+	getConcordanceGlobal(){
+		const data = Array(this.actions.size).fill().map(_=>Array(this.actions.size).fill(0));
+		for (let i = 0; i < this.criterias.size; i++) {
+			const surData = this.getSurclassement(i);
+			for (let ai1 = 0; ai1 < this.actions.size; ai1++) {
+				for (let ai2 = 0; ai2 < this.actions.size; ai2++) {
+					if(ai1===ai2){
+						data[ai1][ai2] = null;
+					}else if(surData[ai1][ai2]!=="no"){
+						data[ai1][ai2] = this.round(data[ai1][ai2]+ this.criterias.data[i].weightNorm);
+					}
+				}
+			}
+		}
+		return data;
+	}
+	getDiscordanceGlobal(){
+		const data = Array(this.actions.size).fill().map(_=>Array(this.actions.size).fill(1));
+		const cData = this.getConcordanceGlobal();
+		for (let i = 0; i < this.criterias.size; i++) {
+			const surData = this.getSurclassement(i);
+			for (let ai1 = 0; ai1 < this.actions.size; ai1++) {
+				for (let ai2 = 0; ai2 < this.actions.size; ai2++) {
+					if(ai1===ai2){
+						data[ai1][ai2] = null;
+					}else if(this.criterias.data[i].weightNorm>cData[ai1][ai2] && surData[ai1][ai2]==="no"){
+							const cIndiceM = this.round(1-cData[ai1][ai2]);
+							data[ai1][ai2] = this.round(data[ai1][ai2] * (this.round(1-this.criterias.data[i].weightNorm)/cIndiceM));
+					}
+				}
+			}
+		}
+		return data;
+	}
+	getCredibilityGlobal(){
+		const data = Array(this.actions.size).fill().map(_=>Array(this.actions.size).fill(1));
+		const dData = Array(this.actions.size).fill().map(_=>Array(this.actions.size).fill(1));
+		const cData = this.getConcordanceGlobal();
+		for (let i = 0; i < this.criterias.size; i++) {
+			const surData = this.getSurclassement(i);
+			for (let ai1 = 0; ai1 < this.actions.size; ai1++) {
+				for (let ai2 = 0; ai2 < this.actions.size; ai2++) {
+					if(ai1===ai2){
+						dData[ai1][ai2] = null;
+					}else if(this.criterias.data[i].weightNorm>cData[ai1][ai2] && surData[ai1][ai2]==="no"){
+							const cIndiceM = this.round(1-cData[ai1][ai2]);
+							dData[ai1][ai2] = this.round(dData[ai1][ai2] * (this.round(1-this.criterias.data[i].weightNorm)/cIndiceM));
+					}
+				}
+			}
+		}
+		for (let ai1 = 0; ai1 < this.actions.size; ai1++) {
+			for (let ai2 = 0; ai2 < this.actions.size; ai2++) {
+				if(ai1===ai2){
+					data[ai1][ai2] = null;
+				}else{
+					data[ai1][ai2] = dData[ai1][ai2] * cData[ai1][ai2];
+				}
+			}
+		}
+		return data;
+	}
+	getSurclassementGlobal(){
+		const data = Array(this.actions.size).fill().map(_=>Array(this.actions.size).fill(1));
+		const cData = this.getCredibilityGlobal();
+		for (let ai1 = 0; ai1 < this.actions.size; ai1++) {
+			for (let ai2 = 0; ai2 < this.actions.size; ai2++) {
+				if(ai1===ai2){
+					data[ai1][ai2] = null;
+				}else{
+					data[ai1][ai2] = cData[ai1][ai2]>this.lamdas.global?this.lamdas.global:"no";
+				}
+			}
+		}
+		return data;
 	}
 	_normalize(){
 		if(this._normalized) return;

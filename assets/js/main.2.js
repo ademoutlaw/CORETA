@@ -669,7 +669,11 @@ $(function (e) {
     
     // step 4
     let indiceType = 1;
+    function hideSelectBy(){
+        $("#div-select-by").hide();
+    }
     function setSelectBy() {
+        $("#div-select-by").show();
         const $select = $("#select-by").html('');
         coreta.getCriteriasAttributes().forEach((cri, i)=>{
             $select.append(`<option value="${i}">${cri.name}</option>`);
@@ -723,6 +727,34 @@ $(function (e) {
         $("#surclassement").prop("disabled",true);
         
     }
+    function getConcordanceGlobal() {
+        const data = coreta.getConcordanceGlobal();
+        setIndicesTable(data);
+        indiceType = 5;
+        resetIndicesMenu();
+        $("#concordance-g").prop("disabled",true);
+    }
+    function getDiscordanceGlobal() {
+        const data = coreta.getDiscordanceGlobal();
+        setIndicesTable(data);
+        indiceType = 6;
+        resetIndicesMenu();
+        $("#discordance-g").prop("disabled",true);
+    }
+    function getCredibilityGlobal() {
+        const data = coreta.getCredibilityGlobal();
+        setIndicesTable(data);
+        indiceType = 7;
+        resetIndicesMenu();
+        $("#credibility-g").prop("disabled",true);
+    }
+    function getSurclassementGlobal() {
+        const data = coreta.getSurclassementGlobal();
+        setIndicesTable(data);
+        indiceType = 8;
+        resetIndicesMenu();
+        $("#surclassement-g").prop("disabled",true);
+    }
     $("#concordance").click(function () {
         setSelectBy();
         getConcordance();
@@ -738,6 +770,22 @@ $(function (e) {
     $("#surclassement").click(function () {
         setSelectBy();
         getSurclassement();
+    });
+    $("#concordance-g").click(function () {
+        hideSelectBy();
+        getConcordanceGlobal();
+    });
+    $("#discordance-g").click(function () {
+        hideSelectBy();
+        getDiscordanceGlobal();
+    });
+    $("#credibility-g").click(function () {
+        hideSelectBy();
+        getCredibilityGlobal();
+    });
+    $("#surclassement-g").click(function () {
+        hideSelectBy();
+        getSurclassementGlobal();
     });
     $("#select-by").change(function () {
         switch (indiceType) {
@@ -758,4 +806,7 @@ $(function (e) {
                 break;
         }
     })
+    $('#btn-step5-prev').click(function () {
+        navigate(4, "right");
+    });
 })
