@@ -340,6 +340,7 @@ $(function (e) {
         }
     }
     function setLamdas() {
+        console.error("setLamda");
         const lamdas = coreta.getLamdas();
         const lamdaG = coreta.getLamdaGlobal();
         $('#btn-step2-next').prop("disabled", true);
@@ -389,16 +390,8 @@ $(function (e) {
         navigate(1, "right");
     });
     $("#btn-step2-next").click(function () {
-        // const dir = $(this).data("direction");
-        // const step = $(this).val();
-        if (restoreEntryData()) {
-            $('#btn-step2-next').prop("disabled", true);
-            navigate(3, "left");
-        } else {
-            setDisplaySelects();
-            displayData();
-            navigate(4, "left");
-        }
+        setRhos();
+        navigate(3, "left");
     });
     $('#out-add-lamda-g').on("click","span",function () {
         showEditLamdaModal($(this), "lamdaG");
@@ -408,6 +401,102 @@ $(function (e) {
     });
 
     // step 3
+    function addRho(val, exist = false) {
+        if (exist || coreta.addRho(val)) {
+            const $table = $("#add-rho table");
+            let w = $table.width();
+            w += coreta.getActionSize() < 20 ? 96 : 48;
+            $table.width(w);
+            $('#out-add-rho').append(`<td>${val}</td>`);
+            $("#in-add-rho").val("").focus();
+            if (coreta.rhoIsSet()) {
+                console.log("yessss");
+                $("#add-rho").addClass('no-form');
+                if(coreta.rhoGlobalIsSet()){
+                    console.log("is setttttt");
+                    $("#btn-step3-next").prop("disabled", false);
+                }
+            }
+        }
+    }
+    function setRhoGlobal(val) {
+        if (coreta.setRhoGlobal(val)) {
+            $('#out-add-rho-g').html("").append(`<span>${val}</span>`);
+            $("#add-rho-g").addClass('no-form');
+            if (coreta.rhoIsSet()) {
+                $("#btn-step3-next").prop("disabled", false);
+            }
+        }
+    }
+    function setRhos() {
+        const rhos = coreta.getRhos();
+        const rhoG = coreta.getRhoGlobal();
+        $('#btn-step3-next').prop("disabled", true);
+        $('#out-add-rho').html("");
+        $('#add-rho table').css("width", "");
+        const $table = $("#add-rho table");
+        const wd = coreta.getActionSize() < 20 ? 96 : 48;
+        let w = $table.width();
+        rhos.forEach(function (rho) {
+            $('#out-add-rho').append(`<td>${rho}</td>`);
+            w += wd;
+        });
+        $table.width(w);
+        if(rhoG){
+            $("#add-rho-g").addClass('no-form');
+            $('#out-add-rho-g').html(`<span>${rhoG}</span>`);
+        }else{
+            $("#add-rho-g").removeClass('no-form');
+        }
+        if (coreta.rhoIsSet()) {
+            $("#add-rho").addClass('no-form');
+            if(coreta.rhoGlobalIsSet()){
+                $("#btn-step3-next").prop("disabled", false);
+            }
+        }else{
+            $("#add-rho").removeClass('no-form');
+        }
+    }
+    function updateRho($elem, type, rho) {
+        $elem.html(rho);
+        if(type=="rho"){
+            const index = $elem.index();
+            coreta.setRho(index, rho);
+        }else{
+            coreta.setRhoGlobal(rho);
+        }
+    }
+    $("#btn-add-rho").click(function () {
+        const val = $("#in-add-rho").val();
+        addRho(val);
+    });
+    $("#btn-add-rho-g").click(function () {
+        const val = $("#in-add-rho-g").val();
+        setRhoGlobal(val);
+    });
+    $("#btn-step3-prev").click(function () {
+        navigate(2, "right");
+    });
+    $("#btn-step3-next").click(function () {
+        // const dir = $(this).data("direction");
+        // const step = $(this).val();
+        if (restoreEntryData()) {
+            $('#btn-step2-next').prop("disabled", true);
+            navigate(4, "left");
+        } else {
+            setDisplaySelects();
+            displayData();
+            navigate(5, "left");
+        }
+    });
+    $('#out-add-rho-g').on("click","span",function () {
+        showEditrhoModal($(this), "rhoG");
+    });
+    $('#add-rho').on("click","td",function () {
+        showEditrhoModal($(this), "rho");
+    });
+
+    // step 4
     let entryPeriodIndex, entryActionIndex;
     function setEntryInputs() {
         const size = coreta.getCriteriaSize();

@@ -20,6 +20,10 @@ class Coreta{
 			global:null,
 			data:[]
 		};
+		this.rhos = {
+			global:null,
+			data:[]
+		};
 		this.data = [];
 		this._normalized = false;
 	}
@@ -226,6 +230,36 @@ class Coreta{
 		this.lamdas.data[index] = lamda;
 	}
 
+	addRho(rho){
+		if(rho === "" || isNaN(rho)) return false;
+		this._started = true;
+		this.rhos.data.push(rho);
+		return true;
+	}
+	rhoIsSet(){
+		return this.rhos.data.length >= this.actions.size;
+	}
+	rhoGlobalIsSet(){
+		return this.rhos.global !== null ;
+	}
+	setRhoGlobal(rho){
+		this._started = true;
+		this.rhos.global = rho;
+		return true;
+	}
+	getRhos(){
+		return this.rhos.data.slice();
+	}
+	getRhoGlobal(){
+		return this.rhos.global;
+	}
+	getRho(index){
+		return this.rhos.data[index];
+	}
+	setRho(index, rho){
+		this._started = true;
+		this.rhos.data[index] = rho;
+	}
 	getLastPeriodNotSet(){
 		for (let i = 0; i < this.periods.size; i++) {
 			if(this.data[i][this.actions.size-1][0]==null){
